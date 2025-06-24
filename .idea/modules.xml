@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ApiGateway/ApiGateway.iml" filepath="$PROJECT_DIR$/ApiGateway/ApiGateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BillingService/BillingService.iml" filepath="$PROJECT_DIR$/BillingService/BillingService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MenuService/MenuService.iml" filepath="$PROJECT_DIR$/MenuService/MenuService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OrderService/OrderService.iml" filepath="$PROJECT_DIR$/OrderService/OrderService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/QrService/QRService.iml" filepath="$PROJECT_DIR$/QrService/QRService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RestaurentService/RestaurentService.iml" filepath="$PROJECT_DIR$/RestaurentService/RestaurentService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ServiceRegistery/ServiceRegistery.iml" filepath="$PROJECT_DIR$/ServiceRegistery/ServiceRegistery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/emenu.iml" filepath="$PROJECT_DIR$/.idea/emenu.iml" />
+    </modules>
+  </component>
+</project>
