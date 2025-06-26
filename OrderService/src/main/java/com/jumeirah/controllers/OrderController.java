@@ -1,18 +1,26 @@
 package com.jumeirah.controllers;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 public class OrderController {
 
     @GetMapping("/test")
     public String test(){
         return "Test Work";
     }
+
+//    @Autowired
+//    private OrderService orderService;
+//
+//    @PostMapping("/place-order")
+//    public ResponseEntity<?> placeOrder(@RequestBody Order order) {
+//        return orderService.placeOrder(order);
+//    }
 }

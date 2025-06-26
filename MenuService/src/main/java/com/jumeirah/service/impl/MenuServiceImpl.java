@@ -191,21 +191,25 @@ public class MenuServiceImpl implements MenuService {
 
         for (Menu menu : menus) {
             MenuResponseDTO response = new MenuResponseDTO();
+            response.setMenuId(menu.getMenuId());
             response.setMenuName(menu.getMenuName());
 
             List<MenuSection> sections = menuSectionRepository.findByMenuId(menu.getMenuId().toString());
             response.setMenuSections(sections.stream().map(section -> {
                 MenuSectionDTO sectionDTO = new MenuSectionDTO();
+                sectionDTO.setMenuSectionId(section.getMenuSectionId());
                 sectionDTO.setSectionName(section.getSectionName());
 
                 List<MenuCategory> categories = menuCategoryRepository.findBySectionId(section.getMenuSectionId().toString());
                 sectionDTO.setMenuCategories(categories.stream().map(category -> {
                     MenuCategoryDTO categoryDTO = new MenuCategoryDTO();
+                    categoryDTO.setMenuCategoryId(category.getMenuCategoryId());
                     categoryDTO.setName(category.getName());
 
                     List<MenuItem> items = menuItemRepository.findByCategoryId(category.getMenuCategoryId().toString());
                     categoryDTO.setItems(items.stream().map(item -> {
                         MenuItemDTO itemDTO = new MenuItemDTO();
+                        itemDTO.setMenuItemId(item.getMenuItem());
                         itemDTO.setName(item.getName());
                         itemDTO.setDescription(item.getDescription());
                         itemDTO.setPrice(item.getPrice());
@@ -221,6 +225,7 @@ public class MenuServiceImpl implements MenuService {
 
                             itemDTO.setCustomizations(customizations.stream().map(cust -> {
                                 CustomizationDTO custDTO = new CustomizationDTO();
+                                custDTO.setCustomizationId(cust.getCustomazationId());
                                 custDTO.setName(cust.getName());
                                 custDTO.setDescription(cust.getDescription());
                                 custDTO.setMin(cust.getMin());
@@ -230,6 +235,7 @@ public class MenuServiceImpl implements MenuService {
                                 if (cust.getList() != null) {
                                     custDTO.setList(cust.getList().stream().map(opt -> {
                                         CustomizationOptionDTO optDTO = new CustomizationOptionDTO();
+                                        optDTO.setCustomazationOptionId(opt.getCustomazationOptionId());
                                         optDTO.setName(opt.getName());
                                         optDTO.setPrice(opt.getPrice());
                                         optDTO.setAltName(opt.getAltName());

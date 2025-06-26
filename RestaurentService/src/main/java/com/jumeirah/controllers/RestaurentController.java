@@ -25,13 +25,13 @@ public class RestaurentController {
         return ResponseEntity.ok(new ApiResponse<>(200, "Test API is working", "Test Work"));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ApiResponse<RestaurentInfo>> create(@RequestBody RestaurentInfo info) {
         RestaurentInfo saved = service.create(info);
         return ResponseEntity.ok(new ApiResponse<>(200, "Restaurant created successfully", saved));
     }
 
-    @GetMapping
+    @GetMapping("/getall")
     public ResponseEntity<ApiResponse<List<RestaurentInfo>>> getAll() {
         List<RestaurentInfo> list = service.getAll();
         return ResponseEntity.ok(new ApiResponse<>(200, "All restaurants fetched successfully", list));

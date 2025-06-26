@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class TagDTO {
+
     private String tagId;
     private String title;
     private boolean display;
