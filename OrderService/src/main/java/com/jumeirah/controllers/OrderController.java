@@ -1,6 +1,8 @@
 package com.jumeirah.controllers;
 
 
+import com.jumeirah.dto.OrderDTO;
+import com.jumeirah.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +18,11 @@ public class OrderController {
         return "Test Work";
     }
 
-//    @Autowired
-//    private OrderService orderService;
-//
-//    @PostMapping("/place-order")
-//    public ResponseEntity<?> placeOrder(@RequestBody Order order) {
-//        return orderService.placeOrder(order);
-//    }
+    @Autowired
+    private OrderService orderService;
+
+    @PostMapping("/place")
+    public ResponseEntity<?> placeOrder(@RequestBody OrderDTO orderDTO) {
+        return orderService.placeOrder(orderDTO);
+    }
 }
