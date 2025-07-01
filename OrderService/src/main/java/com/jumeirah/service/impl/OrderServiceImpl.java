@@ -1,6 +1,7 @@
 package com.jumeirah.service.impl;
 
 import com.jumeirah.dto.CustomizationDTO;
+import com.jumeirah.dto.CustomizationOptionDTO;
 import com.jumeirah.dto.OrderDTO;
 import com.jumeirah.dto.OrderItemDTO;
 import com.jumeirah.model.*;
@@ -50,18 +51,21 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setItemId(UUID.fromString(itemDTO.getItemId()));
             orderItem.setItemPrice(itemDTO.getItemPrice());
             orderItem.setItemStatus(ItemStatus.PREPARING);
-            orderItem.setCustomizationId(itemDTO.getCustomizationId());
-            if (itemDTO.getCustomizationOption() != null) {
-                List<OrderItemCustomization> customizationList = new ArrayList<>();
-                for (CustomizationDTO custDTO : itemDTO.getCustomizationOption()) {
-                    OrderItemCustomization customization = new OrderItemCustomization();
-                    customization.setCustomizationId(UUID.fromString(custDTO.getCustomizationOptionId()));
-                    customization.setPrice(custDTO.getCustomizationOptionPrice());
-                    customizationList.add(customization);
+            if (itemDTO.getCustomizations() != null){
+                for(CustomizationDTO custDTO : itemDTO.getCustomizations()) {
+                    orderItem.setCustomizationId(custDTO.getCustomizationID());
+                    if (custDTO.getCustomizationOptions() != null) {
+                        List<OrderItemCustomization> customizationList = new ArrayList<>();
+                        for (CustomizationOptionDTO custOpDTO : custDTO.getCustomizationOptions()) {
+                            OrderItemCustomization customization = new OrderItemCustomization();
+                            customization.setCustomizationId(UUID.fromString(custOpDTO.getCustomizationOptionId()));
+                            customization.setPrice(custOpDTO.getCustomizationOptionPrice());
+                            customizationList.add(customization);
+                        }
+                        orderItem.setCustomizationsOption(customizationList);
+                    }
                 }
-                orderItem.setCustomizationsOption(customizationList);
             }
-
             orderItemsRepository.save(orderItem);
         }
 

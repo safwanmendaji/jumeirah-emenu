@@ -10,6 +10,5 @@ public class OrderItemDTO {
     private String itemId;
     private Double itemPrice;
     private Integer quantity;
-    private String customizationId;
-    private List<CustomizationDTO> customizationOption;
+    private List<CustomizationDTO> customizations;
 }
