@@ -2,6 +2,7 @@ package com.jumeirah.config;
 
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -15,17 +16,21 @@ public class RouteValidator {
             "/api/user/register",
             "/api/role/create",
             "/eureka",
-            "/qr/test",
+            "/qr/**",
+            "/api/restaurant/getInfo/**",
+            "/api/menu/byrestaurantid/**",
             "/api/order/place"
 
     );
+
+    private static final AntPathMatcher pathMatcher = new AntPathMatcher();
+
 
     // ✅ All other requests require token
     public Predicate<ServerHttpRequest> isSecured =
             request -> openApiEndpoints
                     .stream()
-                    .noneMatch(uri -> request.getURI().getPath().startsWith(uri));
-
+                    .noneMatch(pattern -> pathMatcher.match(pattern, request.getURI().getPath()));
     // Optional: Check if request is from localhost
     public boolean isRequestFromLocalhost(ServerHttpRequest request) {
         String origin = request.getHeaders().getOrigin();
