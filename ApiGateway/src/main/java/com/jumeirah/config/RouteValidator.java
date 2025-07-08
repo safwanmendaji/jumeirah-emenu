@@ -15,7 +15,7 @@ public class RouteValidator {
             "/api/user/register",
             "/api/role/create",
             "/eureka",
-            "/qr/**",
+            "/qr/test",
             "/api/order/place"
 
     );
