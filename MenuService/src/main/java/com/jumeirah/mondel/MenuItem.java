@@ -22,4 +22,9 @@ import java.util.UUID;
         private List<String> tagIds;
 
         // Getters and setters
+
+        public Double getPrice() {
+            return price;
+        }
+
     }
