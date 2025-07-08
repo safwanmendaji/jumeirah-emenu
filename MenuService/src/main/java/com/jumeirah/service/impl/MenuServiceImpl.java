@@ -1,6 +1,5 @@
 package com.jumeirah.service.impl;
 
-
 import com.jumeirah.dto.*;
 import com.jumeirah.mondel.*;
 import com.jumeirah.repository.*;
@@ -16,6 +15,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class MenuServiceImpl implements MenuService {
+
     private final MenuRepository menuRepository;
     private final MenuSectionRepository menuSectionRepository;
     private final MenuCategoryRepository menuCategoryRepository;
@@ -24,6 +24,7 @@ public class MenuServiceImpl implements MenuService {
     private final TagRepository tagRepository;
     private final WorkTimingRepository workTimingRepository;
 
+    // **Get Menu by Menu ID**
     @Override
     public MenuResponseDTO getMenuWithDetails(String menuId) {
         if (menuId == null || menuId.isBlank()) {
@@ -58,50 +59,6 @@ public class MenuServiceImpl implements MenuService {
                     itemDTO.setImage(item.getImage());
                     itemDTO.setCommentCode(item.getCommentCode());
 
-//                    // Fetch customizations
-//                    if (item.getCustomizationIds() != null && !item.getCustomizationIds().isEmpty()) {
-//                        List<Customization> customizations = customizationRepository.findAllByCustomazationId(item.getCustomizationIds().toString());
-//                        itemDTO.setCustomizations(customizations.stream().map(cust -> {
-//                            CustomizationDTO custDTO = new CustomizationDTO();
-//                            custDTO.setName(cust.getName());
-//                            custDTO.setDescription(cust.getDescription());
-//                            custDTO.setMin(cust.getMin());
-//                            custDTO.setMax(cust.getMax());
-//                            custDTO.setDefaultValue(cust.getDefaultValue());
-//                            custDTO.setList(cust.getList().stream().map(opt -> {
-//                                CustomizationOptionDTO optDTO = new CustomizationOptionDTO();
-//                                optDTO.setName(opt.getName());
-//                                optDTO.setPrice(opt.getPrice());
-//                                optDTO.setAltName(opt.getAltName());
-//                                return optDTO;
-//                            }).collect(Collectors.toList()));
-//                            return custDTO;
-//                        }).collect(Collectors.toList()));
-//                    }
-//
-//                    // Fetch tags
-//                    if (item.getTagIds() != null && !item.getTagIds().isEmpty()) {
-//                        List<Tag> tags = tagRepository.findAllByTagId(item.getTagIds().toString());
-//                        itemDTO.setTags(tags.stream().map(tag -> {
-//                            TagDTO tagDTO = new TagDTO();
-//                            tagDTO.setTagId(tag.getTagId().toString());
-//                            tagDTO.setTitle(tag.getTitle());
-//                            tagDTO.setDisplay(tag.isDisplay());
-//                            tagDTO.setCode(tag.getCode());
-//                            tagDTO.setFilter(tag.isFilter());
-//                            if (tag.getIcon() != null) {
-//                                IconDTO iconDTO = new IconDTO();
-//                                iconDTO.setSize(tag.getIcon().getSize());
-//                                iconDTO.setSrc(tag.getIcon().getSrc());
-//                                iconDTO.setAlt(tag.getIcon().getAlt());
-//                                iconDTO.setName(tag.getIcon().getName());
-//                                tagDTO.setIcon(iconDTO);
-//                            }
-//                            tagDTO.setType(tag.getType());
-//                            return tagDTO;
-//                        }).collect(Collectors.toList()));
-//                    }
-
                     // Fetch customizations
                     if (item.getCustomizationIds() != null && !item.getCustomizationIds().isEmpty()) {
                         List<UUID> customizationUUIDs = item.getCustomizationIds().stream()
@@ -132,37 +89,6 @@ public class MenuServiceImpl implements MenuService {
                         }).collect(Collectors.toList()));
                     }
 
-// Fetch tags
-                    if (item.getTagIds() != null && !item.getTagIds().isEmpty()) {
-                        List<UUID> tagUUIDs = item.getTagIds().stream()
-                                .map(UUID::fromString)
-                                .collect(Collectors.toList());
-
-                        List<Tag> tags = tagRepository.findAllById(tagUUIDs);
-
-                        itemDTO.setTags(tags.stream().map(tag -> {
-                            TagDTO tagDTO = new TagDTO();
-                            tagDTO.setTagId(tag.getTagId().toString());
-                            tagDTO.setTitle(tag.getTitle());
-                            tagDTO.setDisplay(tag.isDisplay());
-                            tagDTO.setCode(tag.getCode());
-                            tagDTO.setFilter(tag.isFilter());
-
-                            if (tag.getIcon() != null) {
-                                IconDTO iconDTO = new IconDTO();
-                                iconDTO.setSize(tag.getIcon().getSize());
-                                iconDTO.setSrc(tag.getIcon().getSrc());
-                                iconDTO.setAlt(tag.getIcon().getAlt());
-                                iconDTO.setName(tag.getIcon().getName());
-                                tagDTO.setIcon(iconDTO);
-                            }
-
-                            tagDTO.setType(tag.getType());
-                            return tagDTO;
-                        }).collect(Collectors.toList()));
-                    }
-
-
                     return itemDTO;
                 }).collect(Collectors.toList()));
 
@@ -178,6 +104,7 @@ public class MenuServiceImpl implements MenuService {
         return response;
     }
 
+    // **Get Menu by Restaurant ID**
     @Override
     public List<MenuResponseDTO> getMenuWithDetailsByRestId(String restId) {
         if (restId == null || restId.isBlank()) {
@@ -215,67 +142,6 @@ public class MenuServiceImpl implements MenuService {
                         itemDTO.setPrice(item.getPrice());
                         itemDTO.setImage(item.getImage());
                         itemDTO.setCommentCode(item.getCommentCode());
-
-                        if (item.getCustomizationIds() != null && !item.getCustomizationIds().isEmpty()) {
-                            List<UUID> customizationUUIDs = item.getCustomizationIds().stream()
-                                    .map(UUID::fromString)
-                                    .collect(Collectors.toList());
-
-                            List<Customization> customizations = customizationRepository.findAllById(customizationUUIDs);
-
-                            itemDTO.setCustomizations(customizations.stream().map(cust -> {
-                                CustomizationDTO custDTO = new CustomizationDTO();
-                                custDTO.setCustomizationId(cust.getCustomazationId());
-                                custDTO.setName(cust.getName());
-                                custDTO.setDescription(cust.getDescription());
-                                custDTO.setMin(cust.getMin());
-                                custDTO.setMax(cust.getMax());
-                                custDTO.setDefaultValue(cust.getDefaultValue());
-
-                                if (cust.getList() != null) {
-                                    custDTO.setList(cust.getList().stream().map(opt -> {
-                                        CustomizationOptionDTO optDTO = new CustomizationOptionDTO();
-                                        optDTO.setCustomazationOptionId(opt.getCustomazationOptionId());
-                                        optDTO.setName(opt.getName());
-                                        optDTO.setPrice(opt.getPrice());
-                                        optDTO.setAltName(opt.getAltName());
-                                        return optDTO;
-                                    }).collect(Collectors.toList()));
-                                }
-
-                                return custDTO;
-                            }).collect(Collectors.toList()));
-                        }
-
-                        if (item.getTagIds() != null && !item.getTagIds().isEmpty()) {
-                            List<UUID> tagUUIDs = item.getTagIds().stream()
-                                    .map(UUID::fromString)
-                                    .collect(Collectors.toList());
-
-                            List<Tag> tags = tagRepository.findAllById(tagUUIDs);
-
-                            itemDTO.setTags(tags.stream().map(tag -> {
-                                TagDTO tagDTO = new TagDTO();
-                                tagDTO.setTagId(tag.getTagId().toString());
-                                tagDTO.setTitle(tag.getTitle());
-                                tagDTO.setDisplay(tag.isDisplay());
-                                tagDTO.setCode(tag.getCode());
-                                tagDTO.setFilter(tag.isFilter());
-
-                                if (tag.getIcon() != null) {
-                                    IconDTO iconDTO = new IconDTO();
-                                    iconDTO.setSize(tag.getIcon().getSize());
-                                    iconDTO.setSrc(tag.getIcon().getSrc());
-                                    iconDTO.setAlt(tag.getIcon().getAlt());
-                                    iconDTO.setName(tag.getIcon().getName());
-                                    tagDTO.setIcon(iconDTO);
-                                }
-
-                                tagDTO.setType(tag.getType());
-                                return tagDTO;
-                            }).collect(Collectors.toList()));
-                        }
-
                         return itemDTO;
                     }).collect(Collectors.toList()));
 
@@ -293,6 +159,7 @@ public class MenuServiceImpl implements MenuService {
         return responseList;
     }
 
+    // **Create Menu**
     @Override
     public Menu createMenu(Menu menu) {
         if (menu == null || menu.getMenuName() == null || menu.getRestaurantId() == null) {
@@ -301,6 +168,7 @@ public class MenuServiceImpl implements MenuService {
         return menuRepository.save(menu);
     }
 
+    // **Create Menu Section**
     @Override
     public MenuSection createMenuSection(MenuSection section) {
         if (section == null || section.getMenuId() == null || section.getSectionName() == null) {
@@ -309,6 +177,7 @@ public class MenuServiceImpl implements MenuService {
         return menuSectionRepository.save(section);
     }
 
+    // **Create Menu Category**
     @Override
     public MenuCategory createMenuCategory(MenuCategory category) {
         if (category == null || category.getSectionId() == null || category.getName() == null) {
@@ -317,6 +186,7 @@ public class MenuServiceImpl implements MenuService {
         return menuCategoryRepository.save(category);
     }
 
+    // **Create Menu Item**
     @Override
     public MenuItem createMenuItem(MenuItem item) {
         if (item == null || item.getCategoryId() == null || item.getName() == null) {
@@ -325,6 +195,7 @@ public class MenuServiceImpl implements MenuService {
         return menuItemRepository.save(item);
     }
 
+    // **Create Customization**
     @Override
     public Customization createCustomization(Customization customization) {
         if (customization == null || customization.getName() == null) {
@@ -333,6 +204,7 @@ public class MenuServiceImpl implements MenuService {
         return customizationRepository.save(customization);
     }
 
+    // **Create Tag**
     @Override
     public Tag createTag(Tag tag) {
         if (tag == null || tag.getTitle() == null) {
@@ -341,11 +213,164 @@ public class MenuServiceImpl implements MenuService {
         return tagRepository.save(tag);
     }
 
+    // **Create Work Timing**
     @Override
     public WorkTiming createWorkTiming(WorkTiming timing) {
         if (timing == null || timing.getMenuId() == null || timing.getOpenTime() == null || timing.getCloseTime() == null) {
             throw new IllegalArgumentException("Menu ID, open time, and close time are required");
         }
         return workTimingRepository.save(timing);
+    }
+
+    // **Update Menu**
+    @Override
+    public Menu updateMenu(String menuId, Menu updatedMenu) {
+        Menu menu = menuRepository.findById(UUID.fromString(menuId))
+                .orElseThrow(() -> new RuntimeException("Menu not found with ID: " + menuId));
+
+        // Update non-null fields
+        if (updatedMenu.getMenuName() != null) {
+            menu.setMenuName(updatedMenu.getMenuName());
+        }
+
+        return menuRepository.save(menu);
+    }
+
+    // **Update Menu Section**
+    @Override
+    public MenuSection updateMenuSection(String sectionId, MenuSection updatedSection) {
+        MenuSection section = menuSectionRepository.findById(UUID.fromString(sectionId))
+                .orElseThrow(() -> new RuntimeException("Menu section not found with ID: " + sectionId));
+
+        // Update non-null fields
+        if (updatedSection.getSectionName() != null) {
+            section.setSectionName(updatedSection.getSectionName());
+        }
+
+        return menuSectionRepository.save(section);
+    }
+
+    // **Update Menu Category**
+    @Override
+    public MenuCategory updateMenuCategory(String categoryId, MenuCategory updatedCategory) {
+        MenuCategory category = menuCategoryRepository.findById(UUID.fromString(categoryId))
+                .orElseThrow(() -> new RuntimeException("Menu category not found with ID: " + categoryId));
+
+        // Update non-null fields
+        if (updatedCategory.getName() != null) {
+            category.setName(updatedCategory.getName());
+        }
+
+        return menuCategoryRepository.save(category);
+    }
+
+    // **Update Menu Item**
+    @Override
+    public MenuItem updateMenuItem(String itemId, MenuItem updatedItem) {
+        MenuItem item = menuItemRepository.findById(UUID.fromString(itemId))
+                .orElseThrow(() -> new RuntimeException("Menu item not found with ID: " + itemId));
+
+        // Update non-null fields
+        if (updatedItem.getName() != null) {
+            item.setName(updatedItem.getName());
+        }
+        if (updatedItem.getDescription() != null) {
+            item.setDescription(updatedItem.getDescription());
+        }
+        if (updatedItem.getPrice() != null) {
+            item.setPrice(updatedItem.getPrice());
+        }
+
+        return menuItemRepository.save(item);
+    }
+
+    // **Update Customization**
+    @Override
+    public Customization updateCustomization(String customizationId, Customization updatedCustomization) {
+        Customization customization = customizationRepository.findById(UUID.fromString(customizationId))
+                .orElseThrow(() -> new RuntimeException("Customization not found with ID: " + customizationId));
+
+        // Update non-null fields
+        if (updatedCustomization.getName() != null) {
+            customization.setName(updatedCustomization.getName());
+        }
+        if (updatedCustomization.getDescription() != null) {
+            customization.setDescription(updatedCustomization.getDescription());
+        }
+
+        return customizationRepository.save(customization);
+    }
+
+    // **Update Tag**
+    @Override
+    public Tag updateTag(String tagId, Tag updatedTag) {
+        Tag tag = tagRepository.findById(UUID.fromString(tagId))
+                .orElseThrow(() -> new RuntimeException("Tag not found with ID: " + tagId));
+
+        // Update non-null fields
+        if (updatedTag.getTitle() != null) {
+            tag.setTitle(updatedTag.getTitle());
+        }
+
+        return tagRepository.save(tag);
+    }
+
+    // **Update Work Timing**
+    @Override
+    public WorkTiming updateWorkTiming(String timingId, WorkTiming updatedTiming) {
+        WorkTiming timing = workTimingRepository.findById(UUID.fromString(timingId))
+                .orElseThrow(() -> new RuntimeException("Work timing not found with ID: " + timingId));
+
+        // Update non-null fields
+        if (updatedTiming.getOpenTime() != null) {
+            timing.setOpenTime(updatedTiming.getOpenTime());
+        }
+        if (updatedTiming.getCloseTime() != null) {
+            timing.setCloseTime(updatedTiming.getCloseTime());
+        }
+
+        return workTimingRepository.save(timing);
+    }
+
+    // **Delete Menu**
+    @Override
+    public void deleteMenu(String menuId) {
+        menuRepository.deleteById(UUID.fromString(menuId));
+    }
+
+    // **Delete Menu Section**
+    @Override
+    public void deleteMenuSection(String sectionId) {
+        menuSectionRepository.deleteById(UUID.fromString(sectionId));
+    }
+
+    // **Delete Menu Category**
+    @Override
+    public void deleteMenuCategory(String categoryId) {
+        menuCategoryRepository.deleteById(UUID.fromString(categoryId));
+    }
+
+    // **Delete Menu Item**
+    @Override
+    public void deleteMenuItem(String itemId) {
+        menuItemRepository.deleteById(UUID.fromString(itemId));
+    }
+
+    // **Delete Customization**
+    @Override
+    public void deleteCustomization(String customizationId) {
+        customizationRepository.deleteById(UUID.fromString(customizationId));
+    }
+
+    // **Delete Tag**
+    @Override
+    public void deleteTag(String tagId) {
+        tagRepository.deleteById(UUID.fromString(tagId));
+    }
+
+    // **Delete Work Timing**
+    @Override
+    public void deleteWorkTiming(String timingId) {
+        workTimingRepository.deleteById(UUID.fromString(timingId));
     }
 }
