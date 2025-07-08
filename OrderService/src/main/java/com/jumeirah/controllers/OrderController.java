@@ -22,6 +22,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/place")
+    @CrossOrigin
     public ResponseEntity<?> placeOrder(@RequestBody OrderDTO orderDTO) {
         return orderService.placeOrder(orderDTO);
     }

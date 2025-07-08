@@ -5,13 +5,13 @@
       <list>
         <option value="$PROJECT_DIR$/ApiGateway/pom.xml" />
         <option value="$PROJECT_DIR$/ServiceRegistery/pom.xml" />
-        <option value="$PROJECT_DIR$/UserService/pom.xml" />
         <option value="$PROJECT_DIR$/HotelService/pom.xml" />
         <option value="$PROJECT_DIR$/MenuService/pom.xml" />
         <option value="$PROJECT_DIR$/OrderService/pom.xml" />
         <option value="$PROJECT_DIR$/BillingService/pom.xml" />
         <option value="$PROJECT_DIR$/QrService/pom.xml" />
         <option value="$PROJECT_DIR$/RestaurentService/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/pom.xml" />
       </list>
     </option>
   </component>

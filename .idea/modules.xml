@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/QrService/QRService.iml" filepath="$PROJECT_DIR$/QrService/QRService.iml" />
       <module fileurl="file://$PROJECT_DIR$/RestaurentService/RestaurentService.iml" filepath="$PROJECT_DIR$/RestaurentService/RestaurentService.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServiceRegistery/ServiceRegistery.iml" filepath="$PROJECT_DIR$/ServiceRegistery/ServiceRegistery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UserService/UserService.iml" filepath="$PROJECT_DIR$/UserService/UserService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/emenu.iml" filepath="$PROJECT_DIR$/.idea/emenu.iml" />
     </modules>
   </component>
