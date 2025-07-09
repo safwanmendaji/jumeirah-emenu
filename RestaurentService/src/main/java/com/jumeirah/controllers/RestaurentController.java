@@ -6,7 +6,6 @@ import com.jumeirah.model.RestaurentInfo;
 import com.jumeirah.service.RestaurentInfoService;
 import com.jumeirah.utils.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -79,10 +78,33 @@ public class RestaurentController {
         return ResponseEntity.ok(info.get());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<RestaurentInfo>> update(@PathVariable UUID id, @RequestBody RestaurentInfo updated) {
-        RestaurentInfo info = service.update(id, updated);
-        return ResponseEntity.ok(new ApiResponse<>(200, "Restaurant updated successfully", info));
+//    @PutMapping("/{id}")
+//    public ResponseEntity<ApiResponse<RestaurentInfo>> update(@PathVariable UUID id, @RequestBody RestaurentInfo updated) {
+//        RestaurentInfo info = service.update(id, updated);
+//        return ResponseEntity.ok(new ApiResponse<>(200, "Restaurant updated successfully", info));
+//    }
+
+
+    @PutMapping(value = "/update/{id}", consumes = "multipart/form-data")
+    public ResponseEntity<ApiResponse<RestaurentInfo>> updateWithFiles(
+            @PathVariable UUID id,
+            @RequestPart("info") RestaurentInfo updatedInfo,
+            @RequestPart(value = "image", required = false) MultipartFile image,
+            @RequestPart(value = "logo", required = false) MultipartFile logo
+    ) throws IOException {
+
+        if (image != null && !image.isEmpty()) {
+            String imageUrl = fileUploadUtil.saveFile(image);
+            updatedInfo.setImageUrl(imageUrl);
+        }
+
+        if (logo != null && !logo.isEmpty()) {
+            String logoUrl = fileUploadUtil.saveFile(logo);
+            updatedInfo.setLogoUrl(logoUrl);
+        }
+
+        RestaurentInfo updated = service.update(id, updatedInfo);
+        return ResponseEntity.ok(new ApiResponse<>(200, "Restaurant updated successfully with files", updated));
     }
 
 

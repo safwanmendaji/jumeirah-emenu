@@ -13,4 +13,5 @@ public class UserRequestDto {
     private String mobileNo;
     private String address;
     private UUID roleId;
+    private UUID restaurantId;
 }

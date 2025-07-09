@@ -5,7 +5,16 @@ import com.jumeirah.dto.UserDto;
 import com.jumeirah.dto.UserRequestDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.UUID;
+
 public interface UserService {
     ResponseEntity<?> createUser(UserRequestDto userRequestDto);
 
+    ResponseEntity<?> getUsersByRestaurantId(UUID restaurantId);
+
+    ResponseEntity<?> getUserById(UUID userId);
+
+    ResponseEntity<?> updateUser(UUID userId, UserRequestDto dto);
+
+    ResponseEntity<?> deleteUser(UUID userId);
 }
