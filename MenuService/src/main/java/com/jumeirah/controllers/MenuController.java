@@ -112,13 +112,6 @@ public class MenuController {
         return ResponseEntity.ok(updatedItem);
     }
 
-    // 14. Delete Menu Item by ID
-    @DeleteMapping("/deleteItems/{itemId}")
-    public ResponseEntity<String> deleteMenuItem(@PathVariable String itemId) {
-        menuService.deleteMenuItem(itemId);
-        return ResponseEntity.ok("Menu Item deleted successfully");
-    }
-
     // **CRUD Operations for Customization**
     // 15. Create Customization
     @PostMapping("/customizations")
