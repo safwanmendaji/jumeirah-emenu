@@ -332,6 +332,18 @@ public class MenuServiceImpl implements MenuService {
         return workTimingRepository.save(timing);
     }
 
+    @Override
+    public List<MenuCategory> getAllCategories() {
+        return menuCategoryRepository.findAll();
+    }
+
+    @Override
+    public MenuCategory getCategoryById(String categoryId) {
+        return menuCategoryRepository.findById(UUID.fromString(categoryId))
+                .orElseThrow(() -> new RuntimeException("Menu category not found with ID: " + categoryId));
+    }
+
+
     // **Delete Menu**
     @Override
     public void deleteMenu(String menuId) {
@@ -373,4 +385,57 @@ public class MenuServiceImpl implements MenuService {
     public void deleteWorkTiming(String timingId) {
         workTimingRepository.deleteById(UUID.fromString(timingId));
     }
+
+    /* === READ-ONLY SECTION METHODS === */
+    @Override
+    public List<MenuSection> getAllSections() {
+        return menuSectionRepository.findAll();
+    }
+
+    @Override
+    public MenuSection getSectionById(String sectionId) {
+        return menuSectionRepository.findById(UUID.fromString(sectionId))
+                .orElseThrow(() -> new RuntimeException(
+                        "Menu section not found with ID: " + sectionId));
+    }
+
+    /* === READ-ONLY ITEM METHODS === */
+    @Override
+    public List<MenuItem> getAllItems() {
+        return menuItemRepository.findAll();
+    }
+
+    @Override
+    public MenuItem getItemById(String itemId) {
+        return menuItemRepository.findById(UUID.fromString(itemId))
+                .orElseThrow(() -> new RuntimeException(
+                        "Menu item not found with ID: " + itemId));
+    }
+
+    /* === READ-ONLY TAG METHODS === */
+    @Override
+    public List<Tag> getAllTags() {
+        return tagRepository.findAll();
+    }
+
+    @Override
+    public Tag getTagById(String tagId) {
+        return tagRepository.findById(UUID.fromString(tagId))
+                .orElseThrow(() -> new RuntimeException(
+                        "Tag not found with ID: " + tagId));
+    }
+
+    /* === READ-ONLY WORK-TIMING METHODS === */
+    @Override
+    public List<WorkTiming> getAllWorkTimings() {
+        return workTimingRepository.findAll();
+    }
+
+    @Override
+    public WorkTiming getWorkTimingById(String timingId) {
+        return workTimingRepository.findById(UUID.fromString(timingId))
+                .orElseThrow(() -> new RuntimeException(
+                        "Work timing not found with ID: " + timingId));
+    }
+
 }
