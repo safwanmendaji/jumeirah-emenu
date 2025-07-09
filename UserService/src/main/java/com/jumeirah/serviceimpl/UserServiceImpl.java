@@ -46,10 +46,18 @@ public class UserServiceImpl implements UserService {
                         .body(new ApiResponse<>(400, "Email, password, and roleId are required", null));
             }
 
-            // Validate restaurantId
-            if (dto.getRestaurantId() == null || !isValidRestaurant(dto.getRestaurantId())) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(new ApiResponse<>(400, "Invalid or missing restaurantId", null));
+//            // Validate restaurantId
+//            if (dto.getRestaurantId() == null || !isValidRestaurant(dto.getRestaurantId())) {
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                        .body(new ApiResponse<>(400, "Invalid or missing restaurantId", null));
+//            }
+
+            if (dto.getRestaurantId() != null) {
+                boolean valid = isValidRestaurant(dto.getRestaurantId());
+                if (!valid) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(new ApiResponse<>(400, "Invalid restaurantId provided", null));
+                }
             }
 
             // Check if user already exists

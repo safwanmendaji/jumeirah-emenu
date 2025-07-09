@@ -64,14 +64,14 @@ public class MenuController {
     }
 
     // 7. Update Menu Section
-    @PutMapping("update/sections/{sectionId}")
+    @PutMapping("updateSections/{sectionId}")
     public ResponseEntity<MenuSection> updateMenuSection(@PathVariable String sectionId, @RequestBody MenuSection section) {
         MenuSection updatedSection = menuService.updateMenuSection(sectionId, section);
         return ResponseEntity.ok(updatedSection);
     }
 
     // 8. Delete Menu Section by ID
-    @DeleteMapping("delete/sections/{sectionId}")
+    @DeleteMapping("deleteSections/{sectionId}")
     public ResponseEntity<String> deleteMenuSection(@PathVariable String sectionId) {
         menuService.deleteMenuSection(sectionId);
         return ResponseEntity.ok("Menu Section deleted successfully");
@@ -85,14 +85,14 @@ public class MenuController {
     }
 
     // 10. Update Menu Category
-    @PutMapping("/categories/{categoryId}")
+    @PutMapping("/updateCategories/{categoryId}")
     public ResponseEntity<MenuCategory> updateMenuCategory(@PathVariable String categoryId, @RequestBody MenuCategory category) {
         MenuCategory updatedCategory = menuService.updateMenuCategory(categoryId, category);
         return ResponseEntity.ok(updatedCategory);
     }
 
     // 11. Delete Menu Category by ID
-    @DeleteMapping("/categories/{categoryId}")
+    @DeleteMapping("/deleteCategories/{categoryId}")
     public ResponseEntity<String> deleteMenuCategory(@PathVariable String categoryId) {
         menuService.deleteMenuCategory(categoryId);
         return ResponseEntity.ok("Menu Category deleted successfully");
@@ -106,14 +106,14 @@ public class MenuController {
     }
 
     // 13. Update Menu Item
-    @PutMapping("/items/{itemId}")
+    @PutMapping("/updateItems/{itemId}")
     public ResponseEntity<MenuItem> updateMenuItem(@PathVariable String itemId, @RequestBody MenuItem item) {
         MenuItem updatedItem = menuService.updateMenuItem(itemId, item);
         return ResponseEntity.ok(updatedItem);
     }
 
     // 14. Delete Menu Item by ID
-    @DeleteMapping("/items/{itemId}")
+    @DeleteMapping("/deleteItems/{itemId}")
     public ResponseEntity<String> deleteMenuItem(@PathVariable String itemId) {
         menuService.deleteMenuItem(itemId);
         return ResponseEntity.ok("Menu Item deleted successfully");
@@ -127,14 +127,14 @@ public class MenuController {
     }
 
     // 16. Update Customization
-    @PutMapping("/customizations/{customizationId}")
+    @PutMapping("/updateCustomizations/{customizationId}")
     public ResponseEntity<Customization> updateCustomization(@PathVariable String customizationId, @RequestBody Customization customization) {
         Customization updatedCustomization = menuService.updateCustomization(customizationId, customization);
         return ResponseEntity.ok(updatedCustomization);
     }
 
     // 17. Delete Customization by ID
-    @DeleteMapping("/customizations/{customizationId}")
+    @DeleteMapping("/deleteCustomizations/{customizationId}")
     public ResponseEntity<String> deleteCustomization(@PathVariable String customizationId) {
         menuService.deleteCustomization(customizationId);
         return ResponseEntity.ok("Customization deleted successfully");
@@ -148,14 +148,14 @@ public class MenuController {
     }
 
     // 19. Update Tag
-    @PutMapping("/tags/{tagId}")
+    @PutMapping("/updateTags/{tagId}")
     public ResponseEntity<Tag> updateTag(@PathVariable String tagId, @RequestBody Tag tag) {
         Tag updatedTag = menuService.updateTag(tagId, tag);
         return ResponseEntity.ok(updatedTag);
     }
 
     // 20. Delete Tag by ID
-    @DeleteMapping("/tags/{tagId}")
+    @DeleteMapping("/deleteTags/{tagId}")
     public ResponseEntity<String> deleteTag(@PathVariable String tagId) {
         menuService.deleteTag(tagId);
         return ResponseEntity.ok("Tag deleted successfully");
@@ -169,14 +169,14 @@ public class MenuController {
     }
 
     // 22. Update Work Timing
-    @PutMapping("/worktimings/{timingId}")
+    @PutMapping("/updateWorktimings/{timingId}")
     public ResponseEntity<WorkTiming> updateWorkTiming(@PathVariable String timingId, @RequestBody WorkTiming timing) {
         WorkTiming updatedTiming = menuService.updateWorkTiming(timingId, timing);
         return ResponseEntity.ok(updatedTiming);
     }
 
     // 23. Delete Work Timing by ID
-    @DeleteMapping("/worktimings/{timingId}")
+    @DeleteMapping("/deleteWorktimings/{timingId}")
     public ResponseEntity<String> deleteWorkTiming(@PathVariable String timingId) {
         menuService.deleteWorkTiming(timingId);
         return ResponseEntity.ok("Work Timing deleted successfully");

@@ -1,5 +1,6 @@
 package com.jumeirah.serviceimpl;
 
+import com.jumeirah.dto.AuthResponse;
 import com.jumeirah.dto.JwtResponse;
 import com.jumeirah.dto.LoginRequestDto;
 import com.jumeirah.dto.UserDto;
@@ -50,9 +51,18 @@ public class AuthServiceImpl implements AuthService {
 
         // Generate JWT
         String token = jwtService.generateTokenWithClaims(user);
+        UserDto userDto = mapToUserDto(user);
+        AuthResponse authResponse = new AuthResponse(token, userDto);
 
-        return ResponseEntity.ok(new ApiResponse<>(200, "Login successful", token));
+        return ResponseEntity.ok(new ApiResponse<>(200, "Login successful", authResponse));
     }
 
-
+    private UserDto mapToUserDto(UserInfo user) {
+        return new UserDto(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole() != null ? user.getRole().getRoleName() : null
+        );
+    }
 }
