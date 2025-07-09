@@ -34,4 +34,7 @@ public class UserInfo {
 
     @DBRef
     private Role role;
+
+    private UUID restaurantId;
+
 }
