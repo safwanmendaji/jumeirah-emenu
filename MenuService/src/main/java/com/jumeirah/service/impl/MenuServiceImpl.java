@@ -332,6 +332,18 @@ public class MenuServiceImpl implements MenuService {
         return workTimingRepository.save(timing);
     }
 
+    @Override
+    public List<MenuCategory> getAllCategories() {
+        return menuCategoryRepository.findAll();
+    }
+
+    @Override
+    public MenuCategory getCategoryById(String categoryId) {
+        return menuCategoryRepository.findById(UUID.fromString(categoryId))
+                .orElseThrow(() -> new RuntimeException("Menu category not found with ID: " + categoryId));
+    }
+
+
     // **Delete Menu**
     @Override
     public void deleteMenu(String menuId) {

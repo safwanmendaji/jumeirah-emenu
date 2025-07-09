@@ -49,6 +49,9 @@ public interface MenuService {
     // **Delete Work Timing**
     void deleteWorkTiming(String timingId);
 
+    List<MenuCategory> getAllCategories();
+    MenuCategory getCategoryById(String categoryId);
+
     List<MenuSection> getAllSections();
     MenuSection getSectionById(String id);
 

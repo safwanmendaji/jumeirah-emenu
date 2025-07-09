@@ -140,6 +140,19 @@ public class MenuController {
         return ResponseEntity.ok("Customization deleted successfully");
     }
 
+
+    // GET all menu categories
+    @GetMapping("/getCategories")
+    public ResponseEntity<List<MenuCategory>> getAllCategories() {
+        return ResponseEntity.ok(menuService.getAllCategories());
+    }
+
+    // GET menu category by ID
+    @GetMapping("/getCategoriesById/{categoryId}")
+    public ResponseEntity<MenuCategory> getCategoryById(@PathVariable String categoryId) {
+        return ResponseEntity.ok(menuService.getCategoryById(categoryId));
+    }
+
     // **CRUD Operations for Tag**
     // 18. Create Tag
     @PostMapping("/tags")
