@@ -6,6 +6,5 @@ import java.util.UUID;
 
 @Data
 public class RoleRequestDto {
-
     private String roleName;
 }
