@@ -182,51 +182,51 @@ public class MenuController {
         return ResponseEntity.ok("Work Timing deleted successfully");
     }
 
-    @GetMapping("/sections")
+    @GetMapping("/getAllSections")
     public ResponseEntity<List<MenuSection>> getAllSections() {
         return ResponseEntity.ok(menuService.getAllSections());
     }
 
-    @GetMapping("/sections/{sectionId}")
+    @GetMapping("/getSectionsById/{sectionId}")
     public ResponseEntity<MenuSection> getSectionById(@PathVariable String sectionId) {
         return ResponseEntity.ok(menuService.getSectionById(sectionId));
     }
 
     // === GET + DELETE for Menu Items ===
-    @GetMapping("/items")
+    @GetMapping("/getAllItems")
     public ResponseEntity<List<MenuItem>> getAllItems() {
         return ResponseEntity.ok(menuService.getAllItems());
     }
 
-    @GetMapping("/items/{itemId}")
+    @GetMapping("/getItemById/{itemId}")
     public ResponseEntity<MenuItem> getItemById(@PathVariable String itemId) {
         return ResponseEntity.ok(menuService.getItemById(itemId));
     }
 
-    @DeleteMapping("/items/{itemId}")
+    @DeleteMapping("/deleteItems/{itemId}")
     public ResponseEntity<String> deleteItemById(@PathVariable String itemId) {
         menuService.deleteMenuItem(itemId);
         return ResponseEntity.ok("Menu item deleted successfully");
     }
 
     // === GET Methods for Tags ===
-    @GetMapping("/tags")
+    @GetMapping("/getAllTags")
     public ResponseEntity<List<Tag>> getAllTags() {
         return ResponseEntity.ok(menuService.getAllTags());
     }
 
-    @GetMapping("/tags/{tagId}")
+    @GetMapping("/getTagById/{tagId}")
     public ResponseEntity<Tag> getTagById(@PathVariable String tagId) {
         return ResponseEntity.ok(menuService.getTagById(tagId));
     }
 
     // === GET Methods for Work Timings ===
-    @GetMapping("/worktimings")
+    @GetMapping("/getWorktimings")
     public ResponseEntity<List<WorkTiming>> getAllWorkTimings() {
         return ResponseEntity.ok(menuService.getAllWorkTimings());
     }
 
-    @GetMapping("/worktimings/{timingId}")
+    @GetMapping("/getWorktimingsById/{timingId}")
     public ResponseEntity<WorkTiming> getWorkTimingById(@PathVariable String timingId) {
         return ResponseEntity.ok(menuService.getWorkTimingById(timingId));
     }
