@@ -19,8 +19,8 @@ public class RouteValidator {
             "/qr/**",
             "/api/restaurant/getInfo/**",
             "/api/menu/byrestaurantid/**",
-            "/api/order/place"
-
+            "/api/order/place",
+            "/api/order/**"
     );
 
     private static final AntPathMatcher pathMatcher = new AntPathMatcher();
