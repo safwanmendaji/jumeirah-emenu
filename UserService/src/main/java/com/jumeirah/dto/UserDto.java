@@ -11,7 +11,6 @@ public class UserDto {
     private UUID id;
     private String name;
     private String email;
-    private String role;
-
-
+    private RoleDto role;
+    private UUID restaurantId;
 }

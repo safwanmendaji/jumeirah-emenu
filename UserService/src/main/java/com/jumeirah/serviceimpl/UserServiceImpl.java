@@ -7,11 +7,10 @@ import com.jumeirah.model.UserInfo;
 import com.jumeirah.repository.RoleRepository;
 import com.jumeirah.repository.UserRepository;
 import com.jumeirah.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -39,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
 
         @Override
-        public ResponseEntity<?> createUser(UserRequestDto dto) {
+        public ResponseEntity<?> createUser(UserRequestDto dto , HttpServletRequest httpServletRequest) {
             // Basic field validation...
             if (dto.getEmail() == null || dto.getPassword() == null || dto.getRoleId() == null) {
                 return ResponseEntity.badRequest()
@@ -52,8 +51,15 @@ public class UserServiceImpl implements UserService {
 //                        .body(new ApiResponse<>(400, "Invalid or missing restaurantId", null));
 //            }
 
+            String authHeader = httpServletRequest.getHeader("Authorization");
+            String token = null;
+
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                token = authHeader.substring(7); // Extract token after "Bearer "
+            }
+
             if (dto.getRestaurantId() != null) {
-                boolean valid = isValidRestaurant(dto.getRestaurantId());
+                boolean valid = isValidRestaurant(dto.getRestaurantId() , token);
                 if (!valid) {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                             .body(new ApiResponse<>(400, "Invalid restaurantId provided", null));
@@ -139,23 +145,49 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok(new ApiResponse<>(200, "User deleted", null));
     }
 
-    private boolean isValidRestaurant(UUID restaurantId) {
+//    private boolean isValidRestaurant(UUID restaurantId , String) {
+//        String url = "http://localhost:9091/api/restaurant/getById/" + restaurantId;
+//        try {
+//            ResponseEntity<ApiResponse> response = restTemplate.exchange(
+//                    url,
+//                    HttpMethod.GET,
+//                    null,
+//                    ApiResponse.class
+//            );
+//            return response.getStatusCode() == HttpStatus.OK && response.getBody() != null && response.getBody().getData() != null;
+//        } catch (HttpClientErrorException.NotFound e) {
+//            return false;  // Restaurant does not exist
+//        } catch (Exception e) {
+//            throw new IllegalStateException("Unable to validate restaurantId from Restaurant Service", e);
+//        }
+//    }
+
+
+    private boolean isValidRestaurant(UUID restaurantId, String token) {
         String url = "http://localhost:9091/api/restaurant/getById/" + restaurantId;
+
         try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setBearerAuth(token); // Sets Authorization: Bearer <token>
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
             ResponseEntity<ApiResponse> response = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
-                    null,
+                    entity,
                     ApiResponse.class
             );
-            return response.getStatusCode() == HttpStatus.OK && response.getBody() != null && response.getBody().getData() != null;
+
+            return response.getStatusCode() == HttpStatus.OK &&
+                    response.getBody() != null &&
+                    response.getBody().getData() != null;
+
         } catch (HttpClientErrorException.NotFound e) {
             return false;  // Restaurant does not exist
         } catch (Exception e) {
             throw new IllegalStateException("Unable to validate restaurantId from Restaurant Service", e);
         }
     }
-
 
 }
 

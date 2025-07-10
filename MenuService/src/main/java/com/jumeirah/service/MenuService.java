@@ -1,6 +1,7 @@
 package com.jumeirah.service;
 
 import com.jumeirah.dto.MenuResponseDTO;
+import com.jumeirah.dto.MenuSectionReqDto;
 import com.jumeirah.mondel.*;
 
 import java.util.List;
@@ -64,4 +65,7 @@ public interface MenuService {
     List<WorkTiming> getAllWorkTimings();
     WorkTiming getWorkTimingById(String id);
 
+    List<MenuSection> getMenuSectionByRestaurantId(String restaurantId);
+
+    List<MenuCategory> getMenuCategoryByRestaurantId(String restaurantId);
 }

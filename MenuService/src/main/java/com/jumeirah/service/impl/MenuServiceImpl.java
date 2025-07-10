@@ -39,67 +39,67 @@ public class MenuServiceImpl implements MenuService {
 
         // Fetch sections
         List<MenuSection> sections = menuSectionRepository.findByMenuId(menuId);
-        response.setMenuSections(sections.stream().map(section -> {
-            MenuSectionDTO sectionDTO = new MenuSectionDTO();
-            sectionDTO.setSectionName(section.getSectionName());
-
-            // Fetch categories
-            List<MenuCategory> categories = menuCategoryRepository.findBySectionId(section.getMenuSectionId().toString());
-            sectionDTO.setMenuCategories(categories.stream().map(category -> {
-                MenuCategoryDTO categoryDTO = new MenuCategoryDTO();
-                categoryDTO.setName(category.getName());
-
-                // Fetch items
-                List<MenuItem> items = menuItemRepository.findByCategoryId(category.getMenuCategoryId().toString());
-                categoryDTO.setItems(items.stream().map(item -> {
-                    MenuItemDTO itemDTO = new MenuItemDTO();
-                    itemDTO.setName(item.getName());
-                    itemDTO.setDescription(item.getDescription());
-                    itemDTO.setPrice(item.getPrice());
-                    itemDTO.setImage(item.getImage());
-                    itemDTO.setCommentCode(item.getCommentCode());
-
-                    // Fetch customizations
-                    if (item.getCustomizationIds() != null && !item.getCustomizationIds().isEmpty()) {
-                        List<UUID> customizationUUIDs = item.getCustomizationIds().stream()
-                                .map(UUID::fromString)
-                                .collect(Collectors.toList());
-
-                        List<Customization> customizations = customizationRepository.findAllById(customizationUUIDs);
-
-                        itemDTO.setCustomizations(customizations.stream().map(cust -> {
-                            CustomizationDTO custDTO = new CustomizationDTO();
-                            custDTO.setName(cust.getName());
-                            custDTO.setDescription(cust.getDescription());
-                            custDTO.setMin(cust.getMin());
-                            custDTO.setMax(cust.getMax());
-                            custDTO.setDefaultValue(cust.getDefaultValue());
-
-                            if (cust.getList() != null) {
-                                custDTO.setList(cust.getList().stream().map(opt -> {
-                                    CustomizationOptionDTO optDTO = new CustomizationOptionDTO();
-                                    optDTO.setName(opt.getName());
-                                    optDTO.setPrice(opt.getPrice());
-                                    optDTO.setAltName(opt.getAltName());
-                                    return optDTO;
-                                }).collect(Collectors.toList()));
-                            }
-
-                            return custDTO;
-                        }).collect(Collectors.toList()));
-                    }
-
-                    return itemDTO;
-                }).collect(Collectors.toList()));
-
-                return categoryDTO;
-            }).collect(Collectors.toList()));
-
-            return sectionDTO;
-        }).collect(Collectors.toList()));
-
-        // Fetch work timings
-        response.setWorkTimings(workTimingRepository.findByMenuId(menuId));
+//        response.setMenuSections(sections.stream().map(section -> {
+//            MenuSectionDTO sectionDTO = new MenuSectionDTO();
+//            sectionDTO.setSectionName(section.getSectionName());
+//
+//            // Fetch categories
+//            List<MenuCategory> categories = menuCategoryRepository.findBySectionId(section.getMenuSectionId().toString());
+//            sectionDTO.setMenuCategories(categories.stream().map(category -> {
+//                MenuCategoryDTO categoryDTO = new MenuCategoryDTO();
+//                categoryDTO.setName(category.getName());
+//
+//                // Fetch items
+//                List<MenuItem> items = menuItemRepository.findByCategoryId(category.getMenuCategoryId().toString());
+//                categoryDTO.setItems(items.stream().map(item -> {
+//                    MenuItemDTO itemDTO = new MenuItemDTO();
+//                    itemDTO.setName(item.getName());
+//                    itemDTO.setDescription(item.getDescription());
+//                    itemDTO.setPrice(item.getPrice());
+//                    itemDTO.setImage(item.getImage());
+//                    itemDTO.setCommentCode(item.getCommentCode());
+//
+//                    // Fetch customizations
+//                    if (item.getCustomizationIds() != null && !item.getCustomizationIds().isEmpty()) {
+//                        List<UUID> customizationUUIDs = item.getCustomizationIds().stream()
+//                                .map(UUID::fromString)
+//                                .collect(Collectors.toList());
+//
+//                        List<Customization> customizations = customizationRepository.findAllById(customizationUUIDs);
+//
+//                        itemDTO.setCustomizations(customizations.stream().map(cust -> {
+//                            CustomizationDTO custDTO = new CustomizationDTO();
+//                            custDTO.setName(cust.getName());
+//                            custDTO.setDescription(cust.getDescription());
+//                            custDTO.setMin(cust.getMin());
+//                            custDTO.setMax(cust.getMax());
+//                            custDTO.setDefaultValue(cust.getDefaultValue());
+//
+//                            if (cust.getList() != null) {
+//                                custDTO.setList(cust.getList().stream().map(opt -> {
+//                                    CustomizationOptionDTO optDTO = new CustomizationOptionDTO();
+//                                    optDTO.setName(opt.getName());
+//                                    optDTO.setPrice(opt.getPrice());
+//                                    optDTO.setAltName(opt.getAltName());
+//                                    return optDTO;
+//                                }).collect(Collectors.toList()));
+//                            }
+//
+//                            return custDTO;
+//                        }).collect(Collectors.toList()));
+//                    }
+//
+//                    return itemDTO;
+//                }).collect(Collectors.toList()));
+//
+//                return categoryDTO;
+//            }).collect(Collectors.toList()));
+//
+//            return sectionDTO;
+//        }).collect(Collectors.toList()));
+//
+//        // Fetch work timings
+//        response.setWorkTimings(workTimingRepository.findByMenuId(menuId));
 
         return response;
     }
@@ -122,36 +122,36 @@ public class MenuServiceImpl implements MenuService {
             response.setMenuName(menu.getMenuName());
 
             List<MenuSection> sections = menuSectionRepository.findByMenuId(menu.getMenuId().toString());
-            response.setMenuSections(sections.stream().map(section -> {
-                MenuSectionDTO sectionDTO = new MenuSectionDTO();
-                sectionDTO.setMenuSectionId(section.getMenuSectionId());
-                sectionDTO.setSectionName(section.getSectionName());
-
-                List<MenuCategory> categories = menuCategoryRepository.findBySectionId(section.getMenuSectionId().toString());
-                sectionDTO.setMenuCategories(categories.stream().map(category -> {
-                    MenuCategoryDTO categoryDTO = new MenuCategoryDTO();
-                    categoryDTO.setMenuCategoryId(category.getMenuCategoryId());
-                    categoryDTO.setName(category.getName());
-
-                    List<MenuItem> items = menuItemRepository.findByCategoryId(category.getMenuCategoryId().toString());
-                    categoryDTO.setItems(items.stream().map(item -> {
-                        MenuItemDTO itemDTO = new MenuItemDTO();
-                        itemDTO.setMenuItemId(item.getMenuItem());
-                        itemDTO.setName(item.getName());
-                        itemDTO.setDescription(item.getDescription());
-                        itemDTO.setPrice(item.getPrice());
-                        itemDTO.setImage(item.getImage());
-                        itemDTO.setCommentCode(item.getCommentCode());
-                        return itemDTO;
-                    }).collect(Collectors.toList()));
-
-                    return categoryDTO;
-                }).collect(Collectors.toList()));
-
-                return sectionDTO;
-            }).collect(Collectors.toList()));
-
-            response.setWorkTimings(workTimingRepository.findByMenuId(menu.getMenuId().toString()));
+//            response.setMenuSections(sections.stream().map(section -> {
+//                MenuSectionDTO sectionDTO = new MenuSectionDTO();
+//                sectionDTO.setMenuSectionId(section.getMenuSectionId());
+//                sectionDTO.setSectionName(section.getSectionName());
+//
+//                List<MenuCategory> categories = menuCategoryRepository.findBySectionId(section.getMenuSectionId().toString());
+//                sectionDTO.setMenuCategories(categories.stream().map(category -> {
+//                    MenuCategoryDTO categoryDTO = new MenuCategoryDTO();
+//                    categoryDTO.setMenuCategoryId(category.getMenuCategoryId());
+//                    categoryDTO.setName(category.getName());
+//
+//                    List<MenuItem> items = menuItemRepository.findByCategoryId(category.getMenuCategoryId().toString());
+//                    categoryDTO.setItems(items.stream().map(item -> {
+//                        MenuItemDTO itemDTO = new MenuItemDTO();
+//                        itemDTO.setMenuItemId(item.getMenuItem());
+//                        itemDTO.setName(item.getName());
+//                        itemDTO.setDescription(item.getDescription());
+//                        itemDTO.setPrice(item.getPrice());
+//                        itemDTO.setImage(item.getImage());
+//                        itemDTO.setCommentCode(item.getCommentCode());
+//                        return itemDTO;
+//                    }).collect(Collectors.toList()));
+//
+//                    return categoryDTO;
+//                }).collect(Collectors.toList()));
+//
+//                return sectionDTO;
+//            }).collect(Collectors.toList()));
+//
+//            response.setWorkTimings(workTimingRepository.findByMenuId(menu.getMenuId().toString()));
 
             responseList.add(response);
         }
@@ -171,8 +171,8 @@ public class MenuServiceImpl implements MenuService {
     // **Create Menu Section**
     @Override
     public MenuSection createMenuSection(MenuSection section) {
-        if (section == null || section.getMenuId() == null || section.getSectionName() == null) {
-            throw new IllegalArgumentException("Menu ID and section name are required");
+        if (section == null || section.getMenuId() == null || section.getSectionName() == null || section.getRestaurantId() == null) {
+            throw new IllegalArgumentException("Menu ID and restaurantId and section name are required");
         }
         return menuSectionRepository.save(section);
     }
@@ -436,6 +436,16 @@ public class MenuServiceImpl implements MenuService {
         return workTimingRepository.findById(UUID.fromString(timingId))
                 .orElseThrow(() -> new RuntimeException(
                         "Work timing not found with ID: " + timingId));
+    }
+
+    @Override
+    public List<MenuSection> getMenuSectionByRestaurantId(String restaurantId) {
+        return menuSectionRepository.findByRestaurantId(restaurantId);
+    }
+
+    @Override
+    public List<MenuCategory> getMenuCategoryByRestaurantId(String restaurantId) {
+        return menuCategoryRepository.findByRestaurantId(restaurantId);
     }
 
 }

@@ -13,5 +13,7 @@ public class MenuSection {
     private UUID menuSectionId= UUID.randomUUID();
     private String menuId;
     private String sectionName;
+    private String restaurantId;
+
 
 }

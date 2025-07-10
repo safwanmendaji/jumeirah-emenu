@@ -1,9 +1,6 @@
 package com.jumeirah.serviceimpl;
 
-import com.jumeirah.dto.AuthResponse;
-import com.jumeirah.dto.JwtResponse;
-import com.jumeirah.dto.LoginRequestDto;
-import com.jumeirah.dto.UserDto;
+import com.jumeirah.dto.*;
 import com.jumeirah.jwt.JwtService;
 import com.jumeirah.model.ApiResponse;
 import com.jumeirah.model.UserInfo;
@@ -58,11 +55,21 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private UserDto mapToUserDto(UserInfo user) {
+        RoleDto roleDto = null;
+        if (user.getRole() != null) {
+            roleDto = new RoleDto(
+                    user.getRole().getId(),
+                    user.getRole().getRoleName()
+            );
+        }
+
         return new UserDto(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getRole() != null ? user.getRole().getRoleName() : null
+                roleDto,
+                user.getRestaurantId()
         );
     }
+
 }

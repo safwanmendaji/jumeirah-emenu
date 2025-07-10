@@ -3,6 +3,7 @@ package com.jumeirah.controllers;
 import com.jumeirah.dto.UserRequestDto;
 import com.jumeirah.repository.UserRepository;
 import com.jumeirah.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,8 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@RequestBody UserRequestDto userRequestDto) {
-        return userService.createUser(userRequestDto);
+    public ResponseEntity<?> createUser(@RequestBody UserRequestDto userRequestDto ,  HttpServletRequest request) {
+        return userService.createUser(userRequestDto , request);
     }
 
     @GetMapping("/test")

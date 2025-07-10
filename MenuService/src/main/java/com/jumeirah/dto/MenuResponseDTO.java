@@ -10,8 +10,8 @@ public class MenuResponseDTO {
 
     private UUID menuId;
     private String menuName;
-    private List<MenuSectionDTO> menuSections;
-    private List<WorkTiming> workTimings;
+//    private List<MenuSectionDTO> menuSections;
+//    private List<WorkTiming> workTimings;
 }
 
 

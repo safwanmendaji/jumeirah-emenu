@@ -3,12 +3,13 @@ package com.jumeirah.service;
 import com.jumeirah.dto.LoginRequestDto;
 import com.jumeirah.dto.UserDto;
 import com.jumeirah.dto.UserRequestDto;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;
 
 public interface UserService {
-    ResponseEntity<?> createUser(UserRequestDto userRequestDto);
+    ResponseEntity<?> createUser(UserRequestDto userRequestDto , HttpServletRequest httpServletRequest);
 
     ResponseEntity<?> getUsersByRestaurantId(UUID restaurantId);
 

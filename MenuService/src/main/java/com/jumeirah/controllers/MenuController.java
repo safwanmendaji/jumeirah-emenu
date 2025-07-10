@@ -1,6 +1,7 @@
 package com.jumeirah.controllers;
 
 import com.jumeirah.dto.MenuResponseDTO;
+import com.jumeirah.dto.MenuSectionReqDto;
 import com.jumeirah.mondel.*;
 import com.jumeirah.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,14 @@ public class MenuController {
     }
 
     // 1. Get Menu by Menu ID
-    @GetMapping("getMenuById/{menuId}")
+    @GetMapping("/getMenuById/{menuId}")
     public ResponseEntity<MenuResponseDTO> getMenu(@PathVariable String menuId) {
         MenuResponseDTO menuResponse = menuService.getMenuWithDetails(menuId);
         return ResponseEntity.ok(menuResponse);
     }
 
     // 2. Get Menu by Restaurant ID
-    @GetMapping("/byrestaurantid/{restId}")
+    @GetMapping("/mainmenu/{restId}")
     public ResponseEntity<List<MenuResponseDTO>> getMenuByRestaurantId(@PathVariable String restId) {
         List<MenuResponseDTO> menuResponse = menuService.getMenuWithDetailsByRestId(restId);
         return ResponseEntity.ok(menuResponse);
@@ -58,9 +59,9 @@ public class MenuController {
 
     // **CRUD Operations for Menu Section**
     // 6. Create Menu Section
-    @PostMapping("create/sections")
-    public ResponseEntity<MenuSection> createMenuSection(@RequestBody MenuSection section) {
-        return ResponseEntity.ok(menuService.createMenuSection(section));
+    @PostMapping("/create/sections")
+    public ResponseEntity<MenuSection> createMenuSection(@RequestBody MenuSection menuSection) {
+        return ResponseEntity.ok(menuService.createMenuSection(menuSection));
     }
 
     // 7. Update Menu Section
@@ -77,9 +78,15 @@ public class MenuController {
         return ResponseEntity.ok("Menu Section deleted successfully");
     }
 
+    @GetMapping("/getsections/{restaurantId}")
+    public ResponseEntity<?> getMenuSectionByRestaurantId(@PathVariable String restaurantId) {
+        List<MenuSection> menuSectionList = menuService.getMenuSectionByRestaurantId(restaurantId);
+        return ResponseEntity.ok(menuSectionList);
+    }
+
     // **CRUD Operations for Menu Category**
     // 9. Create Menu Category
-    @PostMapping("create/categories")
+    @PostMapping("/create/categories")
     public ResponseEntity<MenuCategory> createMenuCategory(@RequestBody MenuCategory category) {
         return ResponseEntity.ok(menuService.createMenuCategory(category));
     }
@@ -96,6 +103,12 @@ public class MenuController {
     public ResponseEntity<String> deleteMenuCategory(@PathVariable String categoryId) {
         menuService.deleteMenuCategory(categoryId);
         return ResponseEntity.ok("Menu Category deleted successfully");
+    }
+
+    @GetMapping("/getcategory/{restaurantId}")
+    public ResponseEntity<?> getMenuCategoryByRestaurantId(@PathVariable String restaurantId) {
+        List<MenuCategory> menuSectionList = menuService.getMenuCategoryByRestaurantId(restaurantId);
+        return ResponseEntity.ok(menuSectionList);
     }
 
     // **CRUD Operations for Menu Item**

@@ -13,6 +13,6 @@ public class MenuCategory {
     private UUID menuCategoryId= UUID.randomUUID();
     private String sectionId;
     private String name;
-
+    private String restaurantId;
     // Getters and setters
 }

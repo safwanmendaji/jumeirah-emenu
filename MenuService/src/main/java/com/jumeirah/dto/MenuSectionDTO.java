@@ -10,5 +10,6 @@ public class MenuSectionDTO {
 
     private UUID menuSectionId;
     private String sectionName;
-    private List<MenuCategoryDTO> menuCategories;
+
+//    private List<MenuCategoryDTO> menuCategories;
 }
