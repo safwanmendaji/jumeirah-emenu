@@ -20,7 +20,7 @@ import java.util.UUID;
         private String commentCode;
         private List<String> customizationIds;
         private List<String> tagIds;
-
+        private String restaurantId;
         // Getters and setters
 
         public Double getPrice() {

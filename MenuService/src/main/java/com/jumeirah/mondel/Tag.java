@@ -16,7 +16,7 @@ public class Tag {
     private boolean filter;
     private Icon icon;
     private String type;
-
+    private String restaurantId;
     // Getters and setters
 }
 

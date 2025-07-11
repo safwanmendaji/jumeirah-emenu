@@ -11,12 +11,13 @@ import java.util.UUID;
 @Data
 public class Customization {
     @Id
-    private UUID customazationId= UUID.randomUUID();
+    private UUID customizationId = UUID.randomUUID();
     private String name;
     private String description;
     private int min;
     private int max;
     private String defaultValue;
+    private String restaurantId;
     private List<CustomizationOption> list;
 }
 

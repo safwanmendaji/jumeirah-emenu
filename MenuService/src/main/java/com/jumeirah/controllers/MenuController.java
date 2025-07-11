@@ -1,6 +1,7 @@
 package com.jumeirah.controllers;
 
 import com.jumeirah.dto.MenuResponseDTO;
+import com.jumeirah.dto.MenuSectionDTO;
 import com.jumeirah.dto.MenuSectionReqDto;
 import com.jumeirah.mondel.*;
 import com.jumeirah.service.MenuService;
@@ -24,16 +25,16 @@ public class MenuController {
 
     // 1. Get Menu by Menu ID
     @GetMapping("/getMenuById/{menuId}")
-    public ResponseEntity<MenuResponseDTO> getMenu(@PathVariable String menuId) {
+    public ResponseEntity<ApiResponse> getMenu(@PathVariable String menuId) {
         MenuResponseDTO menuResponse = menuService.getMenuWithDetails(menuId);
-        return ResponseEntity.ok(menuResponse);
+        return ResponseEntity.ok(new ApiResponse<>(200 , "Get MainMenuBy Id." , menuResponse));
     }
 
     // 2. Get Menu by Restaurant ID
     @GetMapping("/mainmenu/{restId}")
-    public ResponseEntity<List<MenuResponseDTO>> getMenuByRestaurantId(@PathVariable String restId) {
+    public ResponseEntity<ApiResponse> getMenuByRestaurantId(@PathVariable String restId) {
         List<MenuResponseDTO> menuResponse = menuService.getMenuWithDetailsByRestId(restId);
-        return ResponseEntity.ok(menuResponse);
+        return ResponseEntity.ok(new ApiResponse<>(200 , "Get All MainMenuBy RestaurantId." , menuResponse));
     }
 
     // **CRUD Operations for Menu**
@@ -65,23 +66,29 @@ public class MenuController {
     }
 
     // 7. Update Menu Section
-    @PutMapping("updateSections/{sectionId}")
+    @PutMapping("/updateSections/{sectionId}")
     public ResponseEntity<MenuSection> updateMenuSection(@PathVariable String sectionId, @RequestBody MenuSection section) {
         MenuSection updatedSection = menuService.updateMenuSection(sectionId, section);
         return ResponseEntity.ok(updatedSection);
     }
 
     // 8. Delete Menu Section by ID
-    @DeleteMapping("deleteSections/{sectionId}")
+    @DeleteMapping("/deleteSections/{sectionId}")
     public ResponseEntity<String> deleteMenuSection(@PathVariable String sectionId) {
         menuService.deleteMenuSection(sectionId);
         return ResponseEntity.ok("Menu Section deleted successfully");
     }
 
-    @GetMapping("/getsections/{restaurantId}")
+    @GetMapping("/getsections/byrestaurant/{restaurantId}")
     public ResponseEntity<?> getMenuSectionByRestaurantId(@PathVariable String restaurantId) {
         List<MenuSection> menuSectionList = menuService.getMenuSectionByRestaurantId(restaurantId);
-        return ResponseEntity.ok(menuSectionList);
+        return ResponseEntity.ok(new ApiResponse<>(200 , "Get Sections By RestaurantId." , menuSectionList));
+    }
+
+    @GetMapping("/getsectionsbyid/{sectionId}")
+    public ResponseEntity<?> getMenuSectionById(@PathVariable String sectionId) {
+        MenuSection menuSection = menuService.getMenuSectionById(sectionId);
+        return ResponseEntity.ok(new ApiResponse<>(200 , "Get Menu SectionById." , menuSection));
     }
 
     // **CRUD Operations for Menu Category**
@@ -105,11 +112,18 @@ public class MenuController {
         return ResponseEntity.ok("Menu Category deleted successfully");
     }
 
-    @GetMapping("/getcategory/{restaurantId}")
+    @GetMapping("/getcategory/byrestaurantid/{restaurantId}")
     public ResponseEntity<?> getMenuCategoryByRestaurantId(@PathVariable String restaurantId) {
-        List<MenuCategory> menuSectionList = menuService.getMenuCategoryByRestaurantId(restaurantId);
-        return ResponseEntity.ok(menuSectionList);
+        List<MenuCategory> menuCategoriesList = menuService.getMenuCategoryByRestaurantId(restaurantId);
+        return ResponseEntity.ok(new ApiResponse<>(200 , "Get CategoryBy RestaurantId." , menuCategoriesList));
     }
+
+    @GetMapping("/getcategorybyid/{categoryId}")
+    public ResponseEntity<?> getMenuCategoryById(@PathVariable String categoryId) {
+        MenuCategory menuCategory = menuService.getMenuCategoryById(categoryId);
+        return ResponseEntity.ok(new ApiResponse<>(200 , "Get CategoryBy RestaurantId." , menuCategory));
+    }
+
 
     // **CRUD Operations for Menu Item**
     // 12. Create Menu Item
@@ -127,7 +141,7 @@ public class MenuController {
 
     // **CRUD Operations for Customization**
     // 15. Create Customization
-    @PostMapping("/customizations")
+    @PostMapping("/create/customizations")
     public ResponseEntity<Customization> createCustomization(@RequestBody Customization customization) {
         return ResponseEntity.ok(menuService.createCustomization(customization));
     }
@@ -147,10 +161,16 @@ public class MenuController {
     }
 
 
-    // GET all menu categories
-    @GetMapping("/getCategories")
-    public ResponseEntity<List<MenuCategory>> getAllCategories() {
-        return ResponseEntity.ok(menuService.getAllCategories());
+    @GetMapping("/getcustomizationsbyid/{customizationId}")
+    public ResponseEntity<?> getCustomizationsById(@PathVariable String customizationId) {
+        Customization customization =  menuService.getCustomizationById(customizationId);
+        return ResponseEntity.ok(new ApiResponse<>(200 , "CustomizationById get successfully." , customization));
+    }
+
+    @GetMapping("/getcustomizations/byrestaurantid/{restaurantId}")
+    public ResponseEntity<?> getAllCustomizationsByRestaurantId(@PathVariable String restaurantId) {
+        List<Customization> customizationLst =  menuService.getAllCustomizationsByRestaurantId(restaurantId);
+        return ResponseEntity.ok(new ApiResponse<>(200 , "CustomizationById get successfully." , customizationLst));
     }
 
     // GET menu category by ID
@@ -161,10 +181,12 @@ public class MenuController {
 
     // **CRUD Operations for Tag**
     // 18. Create Tag
-    @PostMapping("/tags")
+    @PostMapping("/create/tags")
     public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
         return ResponseEntity.ok(menuService.createTag(tag));
     }
+
+
 
     // 19. Update Tag
     @PutMapping("/updateTags/{tagId}")
@@ -217,9 +239,14 @@ public class MenuController {
         return ResponseEntity.ok(menuService.getAllItems());
     }
 
-    @GetMapping("/getItemById/{itemId}")
-    public ResponseEntity<MenuItem> getItemById(@PathVariable String itemId) {
-        return ResponseEntity.ok(menuService.getItemById(itemId));
+    @GetMapping("/getitembyid/{itemId}")
+    public ResponseEntity<?> getItemById(@PathVariable String itemId) {
+        return ResponseEntity.ok(new ApiResponse<>(200 , "Get ItemBy Id" , menuService.getItemById(itemId)));
+    }
+
+    @GetMapping("/getallitems/byrestaurantid/{restaurantId}")
+    public ResponseEntity<?> getItemByRestaurantId(@PathVariable String restaurantId) {
+        return ResponseEntity.ok(new ApiResponse<>(200 , "Get ItemBy Id" , menuService.getItemByRestaurantId(restaurantId)));
     }
 
     @DeleteMapping("/deleteItems/{itemId}")
@@ -229,14 +256,15 @@ public class MenuController {
     }
 
     // === GET Methods for Tags ===
-    @GetMapping("/getAllTags")
-    public ResponseEntity<List<Tag>> getAllTags() {
-        return ResponseEntity.ok(menuService.getAllTags());
+    @GetMapping("/getalltags/byrestaurantId/{restaurantId}")
+    public ResponseEntity<?> getAllTagsByRestaurantId(@PathVariable String restaurantId) {
+        List<Tag> tagList = menuService.getAllTagsByRestaurantId(restaurantId);
+        return ResponseEntity.ok(new ApiResponse<>(200 , "All TagsBy Restaurant get successfully" , tagList));
     }
 
-    @GetMapping("/getTagById/{tagId}")
-    public ResponseEntity<Tag> getTagById(@PathVariable String tagId) {
-        return ResponseEntity.ok(menuService.getTagById(tagId));
+    @GetMapping("/gettagbyid/{tagId}")
+    public ResponseEntity<?> getTagById(@PathVariable String tagId) {
+        return ResponseEntity.ok(new ApiResponse<>(200,"Successfully get TagById." , menuService.getTagById(tagId)));
     }
 
     // === GET Methods for Work Timings ===

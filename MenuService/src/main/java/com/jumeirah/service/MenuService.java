@@ -1,7 +1,6 @@
 package com.jumeirah.service;
 
 import com.jumeirah.dto.MenuResponseDTO;
-import com.jumeirah.dto.MenuSectionReqDto;
 import com.jumeirah.mondel.*;
 
 import java.util.List;
@@ -58,6 +57,7 @@ public interface MenuService {
 
     List<MenuItem> getAllItems();
     MenuItem getItemById(String id);
+    List<MenuItem> getItemByRestaurantId(String restaurantId);
 
     List<Tag> getAllTags();
     Tag getTagById(String id);
@@ -68,4 +68,14 @@ public interface MenuService {
     List<MenuSection> getMenuSectionByRestaurantId(String restaurantId);
 
     List<MenuCategory> getMenuCategoryByRestaurantId(String restaurantId);
+
+    MenuSection getMenuSectionById(String sectionId);
+
+    MenuCategory getMenuCategoryById(String categoryId);
+
+    Customization getCustomizationById(String customizationId);
+
+    List<Customization> getAllCustomizationsByRestaurantId(String restaurantId);
+
+    List<Tag> getAllTagsByRestaurantId(String restaurantId);
 }

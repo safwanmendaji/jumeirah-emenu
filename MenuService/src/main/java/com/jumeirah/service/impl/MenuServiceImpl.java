@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -412,6 +411,11 @@ public class MenuServiceImpl implements MenuService {
                         "Menu item not found with ID: " + itemId));
     }
 
+    @Override
+    public List<MenuItem> getItemByRestaurantId(String restaurantId) {
+        return menuItemRepository.findByRestaurantId(restaurantId);
+    }
+
     /* === READ-ONLY TAG METHODS === */
     @Override
     public List<Tag> getAllTags() {
@@ -446,6 +450,37 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<MenuCategory> getMenuCategoryByRestaurantId(String restaurantId) {
         return menuCategoryRepository.findByRestaurantId(restaurantId);
+    }
+
+    @Override
+    public MenuSection getMenuSectionById(String sectionId) {
+        return menuSectionRepository.findById(UUID.fromString(sectionId))
+                .orElseThrow(() -> new RuntimeException(
+                        "Menu Section not found with ID: " + sectionId));
+    }
+
+    @Override
+    public MenuCategory getMenuCategoryById(String categoryId) {
+        return menuCategoryRepository.findById(UUID.fromString(categoryId))
+                .orElseThrow(() -> new RuntimeException(
+                        "Menu Category not found with ID: " + categoryId));
+    }
+
+    @Override
+    public Customization getCustomizationById(String customizationId) {
+        return customizationRepository.findById(UUID.fromString(customizationId))
+                .orElseThrow(() -> new RuntimeException(
+                        "Customization not found with ID: " + customizationId));
+    }
+
+    @Override
+    public List<Customization> getAllCustomizationsByRestaurantId(String restaurantId) {
+        return customizationRepository.findAllByRestaurantId(restaurantId);
+    }
+
+    @Override
+    public List<Tag> getAllTagsByRestaurantId(String restaurantId) {
+        return tagRepository.findByRestaurantId(restaurantId);
     }
 
 }

@@ -7,5 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CustomizationRepository extends MongoRepository<Customization, UUID> {
-    List<Customization> findAllByCustomazationId(String toString);
+    List<Customization> findAllByCustomizationId(String toString);
+
+    List<Customization> findAllByRestaurantId(String restaurantId);
 }

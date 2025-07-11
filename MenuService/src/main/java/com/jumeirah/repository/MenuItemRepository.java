@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface MenuItemRepository extends MongoRepository<MenuItem, UUID> {
     List<MenuItem> findByCategoryId(String categoryId);
+
+    List<MenuItem> findByRestaurantId(String restaurantId);
 }

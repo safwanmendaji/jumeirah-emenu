@@ -10,6 +10,5 @@ import java.util.UUID;
 public interface TagRepository extends MongoRepository<Tag, UUID> {
 
 
-
-
+    List<Tag> findByRestaurantId(String restaurantId);
 }
